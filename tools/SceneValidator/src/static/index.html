@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SceneValidator - Media Automation Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00BCD4;
+            --secondary-color: #0097A7;
+            --dark-color: #263238;
+            --light-color: #ECEFF1;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+            --error-color: #F44336;
+            --gray-color: #607D8B;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #cfd8dc;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 500;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .upload-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 0;
+            border: 2px dashed #cfd8dc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-section:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-section i {
+            font-size: 48px;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+        
+        .upload-section p {
+            font-size: 18px;
+            color: var(--gray-color);
+        }
+        
+        .upload-section input[type="file"] {
+            display: none;
+        }
+        
+        .settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .setting-group {
+            margin-bottom: 20px;
+        }
+        
+        .setting-group h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cfd8dc;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .button.primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .button.primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .button.secondary {
+            background-color: white;
+            color: var(--dark-color);
+            border: 1px solid #cfd8dc;
+            margin-right: 10px;
+        }
+        
+        .button.secondary:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .progress {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-status {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .results {
+            display: none;
+        }
+        
+        .issue-list {
+            margin-top: 20px;
+        }
+        
+        .issue {
+            padding: 15px;
+            border-left: 4px solid var(--warning-color);
+            background-color: #fff8e1;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .issue.high {
+            border-left-color: var(--error-color);
+            background-color: #ffebee;
+        }
+        
+        .issue.medium {
+            border-left-color: var(--warning-color);
+            background-color: #fff8e1;
+        }
+        
+        .issue.low {
+            border-left-color: var(--success-color);
+            background-color: #e8f5e9;
+        }
+        
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .issue-type {
+            font-weight: 500;
+        }
+        
+        .issue-severity {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background-color: #ffcc80;
+            color: #e65100;
+        }
+        
+        .issue.high .issue-severity {
+            background-color: #ef9a9a;
+            color: #b71c1c;
+        }
+        
+        .issue.medium .issue-severity {
+            background-color: #ffcc80;
+            color: #e65100;
+        }
+        
+        .issue.low .issue-severity {
+            background-color: #a5d6a7;
+            color: #1b5e20;
+        }
+        
+        .issue-description {
+            margin-bottom: 10px;
+        }
+        
+        .issue-suggestions {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .issue-suggestions ul {
+            padding-left: 20px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            color: var(--gray-color);
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            .settings {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://via.placeholder.com/40/00BCD4/FFFFFF?text=SV" alt="SceneValidator Logo">
+                <h1>SceneValidator</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Validate</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2>Upload Video</h2>
+                <label for="file-upload" class="upload-section">
+                    <i>📁</i>
+                    <p>Drag and drop video file here or click to browse</p>
+                    <input type="file" id="file-upload" accept="video/*">
+                </label>
+                
+                <div class="progress">
+                    <h3>Processing Video...</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="status-text">Initializing...</span>
+                        <span class="status-percentage">0%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Validation Settings</h2>
+                <div class="settings">
+                    <div class="setting-group">
+                        <h3>Basic Settings</h3>
+                        <div class="form-group">
+                            <label for="sensitivity">Detection Sensitivity</label>
+                            <input type="range" id="sensitivity" class="slider" min="0" max="1" step="0.1" value="0.7">
+                            <div class="range-values">
+                                <span>Low</span>
+                                <span class="value">0.7</span>
+                                <span>High</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="check-composition" checked>
+                            <label for="check-composition">Check Composition</label>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="check-lighting" checked>
+                            <label for="check-lighting">Check Lighting</label>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="check-continuity" checked>
+                            <label for="check-continuity">Check Continuity</label>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Advanced Settings</h3>
+                        <div class="form-group">
+                            <label for="frame-sample-rate">Frame Sample Rate</label>
+                            <input type="number" id="frame-sample-rate" value="5" min="1" max="30">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="min-scene-duration">Minimum Scene Duration (seconds)</label>
+                            <input type="number" id="min-scene-duration" value="1.5" min="0.5" step="0.1">
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="use-object-tracking" checked>
+                            <label for="use-object-tracking">Use Object Tracking</label>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="analyze-color-grading" checked>
+                            <label for="analyze-color-grading">Analyze Color Grading</label>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Output Settings</h3>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="export-json" checked>
+                            <label for="export-json">Export JSON Report</label>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="export-html" checked>
+                            <label for="export-html">Export HTML Report</label>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="save-to-firebase">
+                            <label for="save-to-firebase">Save to Firebase</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project-id">Project ID</label>
+                            <input type="text" id="project-id" placeholder="Optional: For Firebase storage">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="button secondary">Reset</button>
+                    <button class="button primary">Start Validation</button>
+                </div>
+            </div>
+            
+            <div class="card results">
+                <h2>Validation Results</h2>
+                <div class="result-summary">
+                    <p>Found <strong>3</strong> issues in your video:</p>
+                    <ul>
+                        <li><span class="badge high">1</span> High severity issues</li>
+                        <li><span class="badge medium">1</span> Medium severity issues</li>
+                        <li><span class="badge low">1</span> Low severity issues</li>
+                    </ul>
+                </div>
+                
+                <div class="issue-list">
+                    <div class="issue high">
+                        <div class="issue-header">
+                            <span class="issue-type">Continuity Issue</span>
+                            <span class="issue-severity">High (0.9)</span>
+                        </div>
+                        <div class="issue-timestamp">00:36 (Frame 866)</div>
+                        <div class="issue-description">Object position change - coffee cup moves between cuts</div>
+                        <div class="issue-suggestions">
+                            <strong>Suggestions:</strong>
+                            <ul>
+                                <li>Reshoot with attention to prop placement</li>
+                                <li>Consider digital correction if possible</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="issue medium">
+                        <div class="issue-header">
+                            <span class="issue-type">Lighting Issue</span>
+                            <span class="issue-severity">Medium (0.7)</span>
+                        </div>
+                        <div class="issue-timestamp">00:28 (Frame 689)</div>
+                        <div class="issue-description">Lighting shift between cuts - color temperature changes from warm to cool</div>
+                        <div class="issue-suggestions">
+                            <strong>Suggestions:</strong>
+                            <ul>
+                                <li>Adjust color grading for consistency</li>
+                                <li>Re-shoot with consistent lighting setup</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="issue low">
+                        <div class="issue-header">
+                            <span class="issue-type">Composition Issue</span>
+                            <span class="issue-severity">Low (0.6)</span>
+                        </div>
+                        <div class="issue-timestamp">00:12 (Frame 300)</div>
+                        <div class="issue-description">Rule of thirds violation - main subject is centered instead of aligned with grid</div>
+                        <div class="issue-suggestions">
+                            <strong>Suggestions:</strong>
+                            <ul>
+                                <li>Reframe shot to place subject at intersection of thirds grid</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="button secondary">Download Report</button>
+                    <button class="button primary">Fix Issues</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>SceneValidator - Part of Media Automation Tools Suite © 2025</p>
+        </footer>
+    </div>
+    
+    <script>
+        // This would be replaced with actual functionality in a real implementation
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileUpload = document.getElementById('file-upload');
+            const uploadSection = document.querySelector('.upload-section');
+            const progressSection = document.querySelector('.progress');
+            const progressFill = document.querySelector('.progress-fill');
+            const statusText = document.querySelector('.status-text');
+            const statusPercentage = document.querySelector('.status-percentage');
+            const resultsSection = document.querySelector('.results');
+            const sensitivitySlider = document.getElementById('sensitivity');
+            const sensitivityValue = document.querySelector('.value');
+            
+            // Update sensitivity value display
+            sensitivitySlider.addEventListener('input', function() {
+                sensitivityValue.textContent = this.value;
+            });
+            
+            // Simulate file upload and processing
+            uploadSection.addEventListener('click', function() {
+                fileUpload.click();
+            });
+            
+            fileUpload.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    const fileName = this.files[0].name;
+                    uploadSection.innerHTML = `<i>📹</i><p>${fileName}</p>`;
+                    
+                    // Show progress
+                    progressSection.style.display = 'block';
+                    
+                    // Simulate processing
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 5;
+                        progressFill.style.width = `${progress}%`;
+                        statusPercentage.textContent = `${progress}%`;
+                        
+                        if (progress < 30) {
+                            statusText.textContent = 'Analyzing video...';
+                        } else if (progress < 60) {
+                            statusText.textContent = 'Checking composition...';
+                        } else if (progress < 80) {
+                            statusText.textContent = 'Validating continuity...';
+                        } else {
+                            statusText.textContent = 'Finalizing report...';
+                        }
+                        
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            // Show results after a short delay
+                            setTimeout(() => {
+                                progressSection.style.display = 'none';
+                                resultsSection.style.display = 'block';
+                            }, 500);
+                        }
+                    }, 100);
+                }
+            });
+            
+            // Handle drag and drop
+            uploadSection.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#00BCD4';
+                this.style.backgroundColor = '#E0F7FA';
+            });
+            
+            uploadSection.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#cfd8dc';
+                this.style.backgroundColor = 'transparent';
+            });
+            
+            uploadSection.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#cfd8dc';
+                this.style.backgroundColor = 'transparent';
+                
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0 && files[0].type.startsWith('video/')) {
+                    fileUpload.files = files;
+                    const event = new Event('change');
+                    fileUpload.dispatchEvent(event);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
