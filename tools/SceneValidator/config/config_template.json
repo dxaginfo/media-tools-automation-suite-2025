@@ -1,0 +1,99 @@
+{
+  "api_credentials": {
+    "gemini_api_key": "YOUR_GEMINI_API_KEY",
+    "google_cloud_project": "YOUR_GCP_PROJECT_ID",
+    "firebase_config_path": "path/to/firebase_credentials.json"
+  },
+  "validation_settings": {
+    "default_sensitivity": 0.7,
+    "check_composition": true,
+    "check_lighting": true,
+    "check_continuity": true,
+    "frame_sample_rate": 5,
+    "min_scene_duration": 1.5,
+    "advanced_analysis": {
+      "use_object_tracking": true,
+      "track_facial_expressions": true,
+      "detect_jump_cuts": true,
+      "analyze_color_grading": true
+    }
+  },
+  "output_settings": {
+    "export_json": true,
+    "export_html": true,
+    "export_pdf": false,
+    "save_to_firebase": true,
+    "generate_thumbnails": true,
+    "thumbnail_size": [320, 180],
+    "notification_email": "your_email@example.com"
+  },
+  "integration": {
+    "continuity_tracker": {
+      "enabled": true,
+      "api_endpoint": "http://localhost:5001/continuity-tracker/api/v1"
+    },
+    "timeline_assembler": {
+      "enabled": false,
+      "api_endpoint": "http://localhost:5002/timeline-assembler/api/v1"
+    },
+    "webhook_notifications": [
+      {
+        "name": "Slack",
+        "url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
+        "enabled": false
+      },
+      {
+        "name": "Microsoft Teams",
+        "url": "https://your-organization.webhook.office.com/webhookb2/your-webhook-url",
+        "enabled": false
+      }
+    ]
+  },
+  "user_interface": {
+    "theme": "dark",
+    "highlight_color": "#00BCD4",
+    "custom_css_path": null,
+    "show_advanced_options": false
+  },
+  "logging": {
+    "level": "INFO",
+    "file_path": "logs/scene_validator.log",
+    "max_log_size_mb": 10,
+    "backup_count": 5,
+    "log_to_console": true
+  },
+  "performance": {
+    "max_threads": 4,
+    "use_gpu": true,
+    "memory_limit_mb": 2048,
+    "timeout_seconds": 300
+  },
+  "security": {
+    "encrypt_reports": false,
+    "require_authentication": true,
+    "allowed_ip_ranges": ["10.0.0.0/8", "192.168.0.0/16"],
+    "rate_limit": {
+      "max_requests_per_minute": 60,
+      "max_reports_per_day": 100
+    }
+  },
+  "customization": {
+    "composition_rules": [
+      "rule_of_thirds",
+      "leading_lines",
+      "symmetry",
+      "framing",
+      "headroom"
+    ],
+    "lighting_check_parameters": {
+      "color_temperature_tolerance": 500,
+      "brightness_tolerance": 0.15,
+      "contrast_tolerance": 0.2
+    },
+    "continuity_check_parameters": {
+      "object_position_tolerance": 0.1,
+      "costume_color_tolerance": 0.15,
+      "time_of_day_consistency": true
+    }
+  }
+}
