@@ -1,99 +1,55 @@
 {
+  "sensitivity": 0.7,
+  "check_composition": true,
+  "check_lighting": true,
+  "check_continuity": true,
+  "output_dir": "./output",
+  "temp_dir": "/tmp/scenevalidator",
   "api_credentials": {
     "gemini_api_key": "YOUR_GEMINI_API_KEY",
     "google_cloud_project": "YOUR_GCP_PROJECT_ID",
-    "firebase_config_path": "path/to/firebase_credentials.json"
+    "firebase_credentials": "path/to/firebase-credentials.json"
   },
-  "validation_settings": {
-    "default_sensitivity": 0.7,
-    "check_composition": true,
-    "check_lighting": true,
-    "check_continuity": true,
-    "frame_sample_rate": 5,
-    "min_scene_duration": 1.5,
-    "advanced_analysis": {
-      "use_object_tracking": true,
-      "track_facial_expressions": true,
-      "detect_jump_cuts": true,
-      "analyze_color_grading": true
-    }
+  "scene_detection": {
+    "threshold": 0.35,
+    "min_scene_length": 1.0
   },
-  "output_settings": {
-    "export_json": true,
-    "export_html": true,
-    "export_pdf": false,
-    "save_to_firebase": true,
-    "generate_thumbnails": true,
-    "thumbnail_size": [320, 180],
-    "notification_email": "your_email@example.com"
+  "composition_rules": {
+    "rule_of_thirds_weight": 0.4,
+    "headroom_weight": 0.3,
+    "balance_weight": 0.3,
+    "min_edge_density": 0.1
   },
-  "integration": {
-    "continuity_tracker": {
-      "enabled": true,
-      "api_endpoint": "http://localhost:5001/continuity-tracker/api/v1"
-    },
-    "timeline_assembler": {
-      "enabled": false,
-      "api_endpoint": "http://localhost:5002/timeline-assembler/api/v1"
-    },
-    "webhook_notifications": [
-      {
-        "name": "Slack",
-        "url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
-        "enabled": false
-      },
-      {
-        "name": "Microsoft Teams",
-        "url": "https://your-organization.webhook.office.com/webhookb2/your-webhook-url",
-        "enabled": false
-      }
+  "lighting_settings": {
+    "brightness_change_threshold": 50,
+    "color_temp_sensitivity": 0.7,
+    "direction_change_sensitivity": 0.6
+  },
+  "continuity_settings": {
+    "object_confidence_threshold": 0.7,
+    "position_change_threshold": 0.3,
+    "important_objects": [
+      "person",
+      "car",
+      "chair",
+      "table",
+      "bottle",
+      "cup"
     ]
   },
-  "user_interface": {
-    "theme": "dark",
-    "highlight_color": "#00BCD4",
-    "custom_css_path": null,
-    "show_advanced_options": false
+  "reporting": {
+    "include_frame_thumbnails": true,
+    "max_thumbnails": 20,
+    "firebase_upload": true,
+    "generate_html": true,
+    "generate_pdf": false
   },
-  "logging": {
-    "level": "INFO",
-    "file_path": "logs/scene_validator.log",
-    "max_log_size_mb": 10,
-    "backup_count": 5,
-    "log_to_console": true
-  },
-  "performance": {
-    "max_threads": 4,
+  "advanced": {
     "use_gpu": true,
-    "memory_limit_mb": 2048,
-    "timeout_seconds": 300
-  },
-  "security": {
-    "encrypt_reports": false,
-    "require_authentication": true,
-    "allowed_ip_ranges": ["10.0.0.0/8", "192.168.0.0/16"],
-    "rate_limit": {
-      "max_requests_per_minute": 60,
-      "max_reports_per_day": 100
-    }
-  },
-  "customization": {
-    "composition_rules": [
-      "rule_of_thirds",
-      "leading_lines",
-      "symmetry",
-      "framing",
-      "headroom"
-    ],
-    "lighting_check_parameters": {
-      "color_temperature_tolerance": 500,
-      "brightness_tolerance": 0.15,
-      "contrast_tolerance": 0.2
+    "threading": {
+      "enabled": true,
+      "max_threads": 4
     },
-    "continuity_check_parameters": {
-      "object_position_tolerance": 0.1,
-      "costume_color_tolerance": 0.15,
-      "time_of_day_consistency": true
-    }
+    "logging_level": "INFO"
   }
 }

@@ -1,101 +1,79 @@
 # SceneValidator
 
-SceneValidator is a specialized tool for validating scene composition and continuity in media projects.
+A tool for validating scene composition and continuity in media projects.
 
 ## Overview
 
-SceneValidator uses computer vision and AI algorithms to analyze video scenes and ensure proper composition, lighting consistency, and continuity between shots. It helps identify potential issues that may disrupt viewer experience, such as jump cuts, lighting mismatches, or composition errors.
+SceneValidator analyzes video content to identify issues with composition, lighting consistency, and continuity across scenes. It leverages computer vision and AI technologies to provide actionable feedback for improving video quality.
 
 ## Features
 
-- Scene composition analysis based on cinematography principles
-- Lighting consistency detection across scenes
-- Object and actor position tracking for continuity
-- Color grading consistency validation
-- Automatic report generation with timestamped issues
-- Integration with popular video editing software
+- **Composition Analysis**: Evaluates adherence to rule of thirds, framing, balance, and visual flow
+- **Lighting Consistency**: Detects brightness, color temperature, and light direction changes between scenes
+- **Continuity Tracking**: Identifies missing objects or significant position changes across scenes
+- **Scene Break Detection**: Automatically identifies scene transitions
+- **Comprehensive Reporting**: Generates detailed reports with issue severity and improvement suggestions
 
-## Implementation
+## Implementation Details
 
-SceneValidator is implemented using:
-- Gemini API for scene analysis and anomaly detection
-- Google Cloud Vision API for object detection and tracking
-- Firebase for report storage and user authentication
-- Static HTML/JS interface for web-based validation
+### Core Technologies
 
-## Trigger Mechanisms
+- Python for core functionality
+- OpenCV for image processing
+- Google Cloud Vision API for object detection
+- Gemini API for advanced composition analysis
+- Firebase for report storage (optional)
 
-SceneValidator can be triggered through:
-1. File upload via web interface
-2. Webhook from video editing software
-3. Scheduled batch processing
-4. Command-line interface for automation
-5. API integration with media asset management systems
+### Integration Points
 
-## Input/Output Schema
+- Input: Video files in standard formats (MP4, MOV, AVI)
+- Output: JSON reports, optionally with HTML visualization
+- Firebase integration for report storage and sharing
+- Google Cloud Storage for handling large media files
 
-### Input
-- Video files (MP4, MOV, AVI)
-- Scene metadata (JSON)
-- Validation parameters (JSON)
-- Reference frames (optional)
-
-### Output
-- Validation report (JSON, HTML, PDF)
-- Timestamped issue markers
-- Visual comparison data
-- Suggested fixes
-- Integration data for other tools
-
-## Dependencies
+## Requirements
 
 - Python 3.8+
-- OpenCV
-- TensorFlow/PyTorch
-- Google Cloud SDK
-- Firebase SDK
+- OpenCV 4.5+
+- Optional: Google Cloud credentials for Vision API
+- Optional: Gemini API key for advanced analysis
+- Optional: Firebase credentials for cloud storage
 
-## Sample Usage
+## Installation
 
-```python
-from scene_validator import SceneValidator
+```bash
+# Install required packages
+pip install -r requirements.txt
 
-validator = SceneValidator(
-    api_key="YOUR_GEMINI_API_KEY",
-    cloud_project="YOUR_GCP_PROJECT",
-    firebase_config="path/to/firebase_config.json"
-)
+# Set up Google Cloud credentials (optional)
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/credentials.json"
 
-# Process a video file
-report = validator.validate_video(
-    video_path="path/to/video.mp4",
-    sensitivity=0.8,
-    check_composition=True,
-    check_lighting=True,
-    check_continuity=True
-)
-
-# Export results
-report.export_html("validation_report.html")
-report.export_json("validation_data.json")
-
-# Get specific issues
-lighting_issues = report.get_issues_by_type("lighting")
-for issue in lighting_issues:
-    print(f"Lighting issue at {issue.timestamp}: {issue.description}")
+# Set up Gemini API key (optional)
+export GEMINI_API_KEY="your_api_key"
 ```
 
-## Integration Points
+## Usage
 
-SceneValidator integrates with:
-- **TimelineAssembler** - For scene sequencing validation
-- **ContinuityTracker** - For detailed continuity analysis
-- **FormatNormalizer** - For ensuring consistent video formats
-- **StoryboardGen** - For comparing shots against storyboards
+### Basic Usage
 
-## Security Considerations
+```bash
+python scene_validator.py /path/to/video.mp4
+```
 
-- API keys are stored securely in environment variables
-- User authentication required for web interface
-- Role-based access control for team environments
-- Data encryption for sensitive project metadata
+### With Configuration
+
+```bash
+python scene_validator.py /path/to/video.mp4 --config config.json --output ./reports
+```
+
+## Configuration
+
+See the [configuration template](./config/config_template.json) for all available options.
+
+## Integration with Other Tools
+
+SceneValidator works well with:
+
+- **TimelineAssembler**: For correcting identified issues in timeline sequences
+- **ContinuityTracker**: For deeper continuity analysis between scenes
+- **StoryboardGen**: For comparing actual footage against intended storyboard compositions
