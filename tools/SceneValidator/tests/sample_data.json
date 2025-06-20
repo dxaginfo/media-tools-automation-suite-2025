@@ -1,0 +1,258 @@
+{
+  "test_video": {
+    "name": "sample_test_video.mp4",
+    "duration": 125.5,
+    "resolution": "1920x1080",
+    "fps": 24,
+    "scene_breaks": [
+      {
+        "timestamp": 12.5,
+        "frame_number": 300
+      },
+      {
+        "timestamp": 28.7,
+        "frame_number": 689
+      },
+      {
+        "timestamp": 36.1,
+        "frame_number": 866
+      },
+      {
+        "timestamp": 45.2,
+        "frame_number": 1085
+      },
+      {
+        "timestamp": 64.8,
+        "frame_number": 1555
+      },
+      {
+        "timestamp": 89.3,
+        "frame_number": 2143
+      },
+      {
+        "timestamp": 110.6,
+        "frame_number": 2654
+      }
+    ],
+    "expected_issues": [
+      {
+        "issue_type": "composition",
+        "timestamp": 12.5,
+        "description": "Rule of thirds violation - main subject is centered instead of aligned with grid",
+        "severity": 0.6,
+        "frame_number": 300,
+        "suggestions": [
+          "Reframe shot to place subject at intersection of thirds grid"
+        ]
+      },
+      {
+        "issue_type": "lighting",
+        "timestamp": 28.7,
+        "description": "Lighting shift between cuts - color temperature changes from warm to cool",
+        "severity": 0.8,
+        "frame_number": 689,
+        "suggestions": [
+          "Adjust color grading for consistency",
+          "Re-shoot with consistent lighting setup"
+        ]
+      },
+      {
+        "issue_type": "continuity",
+        "timestamp": 36.1,
+        "description": "Object position change - coffee cup moves between cuts",
+        "severity": 0.9,
+        "frame_number": 866,
+        "suggestions": [
+          "Reshoot with attention to prop placement",
+          "Consider digital correction if possible"
+        ]
+      },
+      {
+        "issue_type": "composition",
+        "timestamp": 45.2,
+        "description": "Headroom excessive - too much space above subject's head",
+        "severity": 0.7,
+        "frame_number": 1085,
+        "suggestions": [
+          "Reduce headroom by reframing or cropping"
+        ]
+      },
+      {
+        "issue_type": "continuity",
+        "timestamp": 64.8,
+        "description": "Actor clothing inconsistency - tie color changes between scenes",
+        "severity": 0.8,
+        "frame_number": 1555,
+        "suggestions": [
+          "Color correct the tie to maintain consistency",
+          "Reshoot with consistent wardrobe"
+        ]
+      },
+      {
+        "issue_type": "lighting",
+        "timestamp": 89.3,
+        "description": "Lighting direction inconsistent - shadows switch sides between shots",
+        "severity": 0.9,
+        "frame_number": 2143,
+        "suggestions": [
+          "Flip one of the shots horizontally",
+          "Adjust lighting in post-production",
+          "Reshoot with consistent lighting direction"
+        ]
+      },
+      {
+        "issue_type": "composition",
+        "timestamp": 110.6,
+        "description": "Horizon line not level - causes disorientation",
+        "severity": 0.7,
+        "frame_number": 2654,
+        "suggestions": [
+          "Rotate frame to level horizon line",
+          "Use stabilization in post-production"
+        ]
+      }
+    ]
+  },
+  "integration_test_data": {
+    "timeline_assembler_data": {
+      "timeline_segments": [
+        {
+          "segment_id": "scene_1",
+          "start_time": 0,
+          "end_time": 12.5,
+          "type": "establishing_shot"
+        },
+        {
+          "segment_id": "scene_2",
+          "start_time": 12.5,
+          "end_time": 28.7,
+          "type": "dialogue"
+        },
+        {
+          "segment_id": "scene_3",
+          "start_time": 28.7,
+          "end_time": 36.1,
+          "type": "dialogue"
+        },
+        {
+          "segment_id": "scene_4",
+          "start_time": 36.1,
+          "end_time": 45.2,
+          "type": "action"
+        },
+        {
+          "segment_id": "scene_5",
+          "start_time": 45.2,
+          "end_time": 64.8,
+          "type": "dialogue"
+        },
+        {
+          "segment_id": "scene_6",
+          "start_time": 64.8,
+          "end_time": 89.3,
+          "type": "action"
+        },
+        {
+          "segment_id": "scene_7",
+          "start_time": 89.3,
+          "end_time": 110.6,
+          "type": "dialogue"
+        },
+        {
+          "segment_id": "scene_8",
+          "start_time": 110.6,
+          "end_time": 125.5,
+          "type": "closing_shot"
+        }
+      ]
+    },
+    "continuity_tracker_data": {
+      "tracked_elements": [
+        {
+          "element_id": "actor_1",
+          "type": "actor",
+          "name": "John",
+          "appearances": [
+            {
+              "scene_id": "scene_2",
+              "costume": "blue suit, red tie",
+              "props": ["coffee cup", "briefcase"]
+            },
+            {
+              "scene_id": "scene_3",
+              "costume": "blue suit, red tie",
+              "props": ["coffee cup"]
+            },
+            {
+              "scene_id": "scene_5",
+              "costume": "blue suit, blue tie",
+              "props": ["briefcase"]
+            },
+            {
+              "scene_id": "scene_7",
+              "costume": "blue suit, blue tie",
+              "props": []
+            }
+          ]
+        },
+        {
+          "element_id": "actor_2",
+          "type": "actor",
+          "name": "Sarah",
+          "appearances": [
+            {
+              "scene_id": "scene_2",
+              "costume": "red dress",
+              "props": ["smartphone"]
+            },
+            {
+              "scene_id": "scene_3",
+              "costume": "red dress",
+              "props": ["smartphone", "notebook"]
+            },
+            {
+              "scene_id": "scene_5",
+              "costume": "red dress",
+              "props": ["notebook"]
+            },
+            {
+              "scene_id": "scene_7",
+              "costume": "red dress",
+              "props": ["smartphone"]
+            }
+          ]
+        },
+        {
+          "element_id": "prop_1",
+          "type": "prop",
+          "name": "coffee cup",
+          "positions": [
+            {
+              "scene_id": "scene_2",
+              "position": "table left side"
+            },
+            {
+              "scene_id": "scene_3",
+              "position": "table right side"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "test_config": {
+    "validation_settings": {
+      "sensitivity": 0.7,
+      "check_composition": true,
+      "check_lighting": true,
+      "check_continuity": true,
+      "frame_sample_rate": 5,
+      "min_scene_duration": 1.5
+    },
+    "output_settings": {
+      "export_json": true,
+      "export_html": true,
+      "save_to_firebase": false
+    }
+  }
+}
